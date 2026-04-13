@@ -1,0 +1,7 @@
+---
+output: blastula::blastula_email
+date: "`r format(Sys.Date()-lubridate::days(30), '%B %Y')`"
+---
+
+Partnership Report
+`r phrase`
