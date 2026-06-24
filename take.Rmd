@@ -3,7 +3,7 @@ output:
   pdf_document:
     latex_engine: pdflatex
     keep_tex: false
-geometry: "left=0.1875in, right=0.1875in, top=0.5in, bottom=0.5in, paperwidth=8.5in, paperheight=11in"
+geometry: "left=0.25in, right=0.25in, top=0.25in, bottom=0.25in, paperwidth=8.5in, paperheight=11in"
 header-includes:
   - \pagestyle{empty}
   - \setlength{\parindent}{0pt}
@@ -12,13 +12,62 @@ header-includes:
   - \usepackage{graphicx}
   - \usepackage{tikz}
   - \AtBeginDocument{\vspace{-\baselineskip}}
+  - \usepackage{pdflscape}
+  - \usepackage{tabularx}
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, include = FALSE, message = FALSE, warning = FALSE, fig.pos = "H", out.extra = "")
-options(knitr.kable.NA = '')
-options(knitr.table.format = "latex")
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, results = 'hide')
+cat("Working directory:", getwd(), "\n")
 ```
+
+
+```{r}
+
+#lims_dsn
+#lims_uid 
+#lims_pwd 
+#owqm_dsn 
+#owqm_uid 
+#owqm_pwd 
+#ops_dsn 
+#ops_uid 
+#ops_pwd
+#sradb_dsn
+#sradb_uid
+#sradb_pwd
+
+# file.edit("~/.Renviron")
+
+
+library(tidyverse)
+library(lubridate)
+library(wqr)
+library(srarr)
+library(readxl)
+library(knitr)
+library(kableExtra)
+library(png)
+library(tinytex)
+```
+
+```{r}
+tex <- function(x) {
+  x <- gsub("\\\\", "\\\\textbackslash{}", x, fixed = FALSE)
+  x <- gsub("&",  "\\&",  x, fixed = TRUE)
+  x <- gsub("%",  "\\%",  x, fixed = TRUE)
+  x <- gsub("$",  "\\$",  x, fixed = TRUE)
+  x <- gsub("#",  "\\#",  x, fixed = TRUE)
+  x <- gsub("_",  "\\_",  x, fixed = TRUE)
+  x <- gsub("{",  "\\{",  x, fixed = TRUE)
+  x <- gsub("}",  "\\}",  x, fixed = TRUE)
+  x <- gsub("~",  "\\textasciitilde{}", x, fixed = TRUE)
+  x <- gsub("^",  "\\textasciicircum{}", x, fixed = TRUE)
+  x
+}
+```
+
+
 
 ```{r}
 
@@ -300,6 +349,23 @@ dbp_table<-inner_join(
          date_time = paste0(year, "-",month)) %>% select(date_time, tthm_min, tthm_max, haa5_min, haa5_max)
 
 
+dbp_table2 <- dbp_table %>% 
+  mutate(
+    tthm_min = ifelse(tthm_min>=60 & tthm_min<80, paste0("\\colorbox{yellow}{",tthm_min, "}"), ifelse(
+    tthm_min>=80, paste0("\\colorbox{red}{",tthm_min, "}"), tthm_min
+  )),
+        tthm_max = ifelse(tthm_max>=60 & tthm_max<80, paste0("\\colorbox{yellow}{",tthm_max, "}"), ifelse(
+    tthm_max>=80, paste0("\\colorbox{red}{",tthm_max, "}"), tthm_max
+  )),
+  haa5_min = ifelse(haa5_min>=45 & haa5_min<60, paste0("\\colorbox{yellow}{",haa5_min, "}"), ifelse(
+    haa5_min>=60, paste0("\\colorbox{red}{",haa5_min, "}"), haa5_min
+  )),
+        haa5_max = ifelse(haa5_max>=45 & haa5_max<60, paste0("\\colorbox{yellow}{",haa5_max, "}"), ifelse(
+    haa5_max>=60, paste0("\\colorbox{red}{",haa5_max, "}"), haa5_max
+  ))
+
+  )
+
 
 
 dbp_kable<- dbp_table %>%
@@ -381,7 +447,7 @@ column_dsc2 <- c(" ","Below PWD distribution system goal of 1.00 mg/L",
                  "Meets PADEP minimum distribution residual required (0.15 mg/L). Does not meet: PfSW goal (0.50 mg/L), PWD distribution system goal (1.00 mg/L)",
                  "Does not meet: PADEP minimum distribution residual required (0.15 mg/L), PfSW goal (0.50 mg/L), PWD distribution system goal (1.00 mg/L)")
 
-summarytable <- read_LIMS(
+summarytable1 <- read_LIMS(
   site = rtcr,
   start_date = start_date,
   end_date = end_date,
@@ -397,7 +463,7 @@ summarytable <- read_LIMS(
             countbetween1and0.5 = sum(result<1 & result>0.5),
             countbetween0.15and0.5 = sum(result<=0.5 & result>0.15),
             count_lessthan0.15 = sum(result<=0.15))
-counts_vector <- c(drr_count, summarytable$count_lessthan1[1], summarytable$countbetween1and0.5[1], summarytable$countbetween0.15and0.5[1], summarytable$count_lessthan0.15[1])
+counts_vector <- c(drr_count, summarytable1$count_lessthan1[1], summarytable1$countbetween1and0.5[1], summarytable1$countbetween0.15and0.5[1], summarytable1$count_lessthan0.15[1])
 
 summarytable <- data.frame(column_dsc1, counts_vector, column_dsc2 ) %>%
   kbl(caption = "Sample Summary",col.names = c("-", "Count", "Description"), escape = FALSE, align = rep('c', 5), booktabs = T, linesep = "")%>%
@@ -448,7 +514,23 @@ monthly_kbl <-  monthly_table %>% mutate(
 
 monthly_kbl <- monthly_kbl %>% pivot_longer(cols= c('Jul', 'Jun', 'May', 'Apr', 'Mar', 'Feb', 'Jan', 'Dec', 'Nov', 'Oct', 'Sep', 'Aug'),
                                             names_to = "month",
-                                            values_to = 'percent')
+                                            values_to = 'percent') %>% mutate(Year = as.character(Year))
+ 
+ 
+monthly_table2 <- monthly_kbl %>% 
+  mutate(across(where(is.numeric), ~ifelse(percent <= 3.99 & percent>=3.00, paste0("\\colorbox{yellow}{", percent, "}"), ifelse(
+percent>=4.00 & percent<5.00, paste0("\\colorbox{orange}{", percent, "}"), ifelse(
+  percent>= 5.00, paste0("\\colorbox{red}{", percent, "}"), percent
+)
+
+  ))))%>% 
+  pivot_wider(
+    id_cols = "Year",
+    names_from = "month",
+    values_from = "percent"
+  ) %>%
+  select("Year", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
+
 monthly_kbl <- monthly_kbl %>% 
   mutate(
     percent = cell_spec(percent, background = ifelse(!is.na(percent) & percent >5.0, "red", ifelse(!is.na(percent) & percent > 4.0 & percent < 4.99, "orange", ifelse(!is.na(percent) & percent >3.0 & percent <3.99, "yellow", "white"))))
@@ -485,66 +567,147 @@ year_max <- monthly_table %>% pivot_longer(-c(Year), names_to = "Month", values_
 ```{r echo = FALSE, results = 'asis'}
 cat(paste0(
 "
+\\centerline{\\includegraphics[width=1.5in, height = 1in, keepaspectratio]{PWD Logo.png}}
 \\begin{tikzpicture}
-\\node[inner sep = 0pt, text width = 8in, minimum height = 0.5in], anchor = north west, align = center] at (0in, 0in) {\\fontsize{14pt}{10pt}{textbf{Partnership for Safe Drinking Water Distribution Program - Disinfectant Residual Update}}};
+\\node[inner sep = 0pt, text width = 8in, minimum height = 0.25in, anchor = north west, align = center] at (0in, 0in) {\\fontsize{16pt}{6pt}{\\textbf{Partnership for Safe Drinking Water Distribution Program}}};
+\\node[inner sep = 0pt, text width = 8in, minimum height = 0.25in, anchor = north west, align = center] at (0in, -0.25in) {\\fontsize{16pt}{6pt}{\\textbf{Disinfectant Residual Update}}};
+\\node[inner sep = 0pt, text width = 8in, minimum height = 0.25in, anchor = north west, align = center] at (0in, -0.5in) {\\fontsize{12pt}{10pt}{",currentmonthlabel,", ", year, "}};
+\\node[inner sep = 0pt, text width = 8in, minimum height = 0.25in, anchor = north west, align = center] at (0in, -0.75in) {\\underline{\\hspace{8in}}};
+
+\\node[inner sep = 0pt, text width = 8in, minimum height = 0.5in, anchor = north west, align = left] at (0in, -1.5in) {The Bureau of Laboratory Services is responsible for administering compliance with the water quality monitoring requirements under both the federal Safe Drinking Water Act (SDWA) and state regulations. As monitoring locations that were temporarily not visited after the onset of COVID-19 are now being revisited, over 600 drinking water samples are collected from", site_count ,"monitoring locations.};
+
+\\node[inner sep = 0pt, text width = 8in, minimum height = 0.25in, anchor = north west, align = left] at (0in, -2.25in) {", tex("Regarding disinfectant residual, the Partnership for Safe Water has a numerical goal that 95% of monthly routine samples be within the following range:"),"};
+
+\\node[inner sep = 0pt, text width = 8in, minimum height = 0.25in, anchor = north west, align = left] at (0in, -2.60in) {\\textbf{Total Chlorine Residual $\\geq$ 0.50 mg/L and $\\leq$ 4.0 mg/L}};
+
+\\node[inner sep = 0pt, text width = 8in, minimum height = 2in, anchor = north west, align = left] at (0in, -2.70in) {
+
+PWD has met this goal for Partnership Years encompassing June 1, 2017 through May 31, 2021 (the Partnership year begins June 1st and runs through May 31st). From November 2017 -- July 2019, less than 1\\% of routine samples were below the Partnership goal of 0.50 mg/L for every month. The last month that PWD did not meet the 95\\% Partnership goal was September 2016 (7.27\\% of monthly samples were below 0.50 mg/L), with the following two Septembers having less than 2\\% of samples below 0.50 mg/L and meeting Partnership's monthly goal. The highest percentage of monthly Partnership samples not meeting the goal in the previous three calendar years (",year(start_date)-3," - ", year(start_date),")"," was ", max(year_max$percent), "\\% in ", year_max$Month[which(year_max$percent == max(year_max$percent))]," ", year_max$Year[which(year_max$percent == max(year_max$percent))], ".
+
+};
+
+\\node[inner sep = 0pt, text width = 8in, minimum height = 2in, anchor = north west, align = left] at (0in, -4.25in) {
+
+A total of ", total_count, " samples were collected in ", currentmonthlabel," ", year, ", ", updown," ", previous_total_count,  " samples collected in ", previousmonthlabel, ". ",phrase, " PWD adjusted the sampling schedule and frequency starting in the second half of March 2020 due to the ongoing COVID-19 pandemic. PWD is still collecting more than the required 360 samples for RTCR/DRR compliance. Starting in November 2020, PWD began to resume sampling from some routine fire and police stations for the RTCR/DRR compliance program. The selected fire and police stations are the locations that are sampled monthly as part of the DBP monitoring program as well. PWD also began resuming sample collection samples from additional fire and police stations earlier this year that were not being sampled during the first year of the pandemic. Starting in July 2020, PWD resumed monthly distribution Disinfection By-Product sampling from the normal fire and police station locations. As of October 2021, Chestnut Hill Hospital is no longer be sampled from and the Chestnut Hill Pressure District Pump Station replaced the hospital as the routine sampling location for the Chestnut Hill pressure district.
+
+};
+
+
+\\node[inner sep = 0pt, text width = 8in, minimum height = 0.25in, anchor = north west, align = left] at (0in, -6.50in) {
+\\textbf{", currentmonthlabel," ", year, " had ", numless0.5, " samples below 0.50 mg/L throughout the distribution system, and ", numless1," samples below 1 mg/l.}};
+
+\\node[inner sep = 0pt, text width = 3in, minimum height = 0.25in, anchor = north west, align = center] at (0in, -6.75in) {};
+\\node[draw, inner sep = 0pt, text width = 2in, minimum height = 0.25in, anchor = north west, align = center] at (3in, -6.75in) {Count};
+\\node[draw, inner sep = 0pt, text width = 3in, minimum height = 0.25in, anchor = north west, align = center] at (5in, -6.75in) {Description};
+
+\\node[draw, inner sep = 0pt, text width = 3in, minimum height = 0.25in, anchor = north west, align = center] at (0in, -7in) {Total DRR Samples for ", currentmonthlabel, " ", year,"};
+\\node[draw, inner sep = 0pt, text width = 2in, minimum height = 0.25in, anchor = north west, align = center] at (3in, -7in) {", drr_count, "};
+\\node[draw, inner sep = 0pt, text width = 3in, minimum height = 0.25in, anchor = north west, align = center] at (5in, -7in) {};
+
+\\node[draw, inner sep = 0pt, text width = 3in, minimum height = 0.5in, anchor = north west, align = center] at (0in, -7.25in) {Number of Samples \\textless{} 1.0 mg/L};
+\\node[draw, inner sep = 0pt, text width = 2in, minimum height = 0.5in, anchor = north west, align = center] at (3in, -7.25in) {",summarytable1$count_lessthan1 ,"};
+\\node[draw, inner sep = 0pt, text width = 3in, minimum height = 0.5in, anchor = north west, align = center] at (5in, -7.25in) {Below PWD Distribution System goal of 1.00 mg/L};
+
+\\node[draw, inner sep = 0pt, text width = 3in, minimum height = 0.5in, anchor = north west, align = center] at (0in, -7.75in) {Number of Samples \\textgreater{} 0.5 mg/L and \\textless{} 1.00 mg/L};
+\\node[draw, inner sep = 0pt, text width = 2in, minimum height = 0.5in, anchor = north west, align = center] at (3in, -7.75in) {",summarytable1$countbetween1and0.5 ,"};
+\\node[draw, inner sep = 0pt, text width = 3in, minimum height = 0.5in, anchor = north west, align = center] at (5in, -7.75in) {Meets PfSW goal of 0.50 mg/L. Does not meet PWD distribution system goal of 1.00 mg/L};
+
+
+\\node[draw, inner sep = 0pt, text width = 3in, minimum height = 0.75in, anchor = north west, align = center] at (0in, -8.25in) {Number of Samples \\textgreater{} 0.15 mg/L and \\textless{} 0.50 mg/L};
+\\node[draw, inner sep = 0pt, text width = 2in, minimum height = 0.75in, anchor = north west, align = center] at (3in, -8.25in) {",summarytable1$countbetween0.15and0.5 ,"};
+\\node[draw, inner sep = 0pt, text width = 3in, minimum height = 0.75in, anchor = north west, align = center] at (5in, -8.25in) {Meets PADEP minimum distribution residual required (0.15 mg/L).  Does not meet: PfSW goal (0.50 mg/L), PWD Distribution goal (1.00 mg/L)};
+
+\\node[draw, inner sep = 0pt, text width = 3in, minimum height = 0.75in, anchor = north west, align = center] at (0in, -9in) {Number of Samples \\textless{} 0.15 mg/L};
+\\node[draw, inner sep = 0pt, text width = 2in, minimum height = 0.75in, anchor = north west, align = center] at (3in, -9in) {",summarytable1$count_lessthan0.15 ,"};
+\\node[draw, inner sep = 0pt, text width = 3in, minimum height = 0.75in, anchor = north west, align = center] at (5in, -9in) {Does not meet: PADEP minimum distribution residual required (0.15 mg/L), PfSW goal (0.50 mg/L), PWD Distribution goal (1.00 mg/L)};
+
+
+
 
 \\end{tikzpicture}
+
+\\newpage
+
+\\begin{tikzpicture}
+
+\\node[inner sep = 0pt, text width = 8in, minimum height = 0.75in, anchor = north west, align = left] at (0in, 0in) {
+
+", tthm_blurb, tthmexceed," locations had single sample TTHM results above the MCL of 80 ppb. Single sample TTHM results above the MCL are not an MCL exceedance as compliance with the MCL is based on Locational Running Averages.
+
+};
+
+\\node[inner sep = 0pt, text width = 8in, minimum height = 0.75in, anchor = north west, align = left] at (0in, -0.75in) {
+
+", haa5_blurb, haa5exceed," locations had single sample HAA5 results above the MCL of 60 ppb. Single sample HAA5 results above the MCL are not an MCL exceedance as compliance with the MCL is based on Locational Running Averages.
+};
+
+
+\\node[inner sep = 0pt, text width = 8in, minimum height = 0.75in, anchor = north west, align = left] at (0in, -1.5in) {
+
+Below is a monthly range of DBP distribution values for the last 13 months. Values that exceed the MCL for a single sample are highlighted in red, and samples that exceed the operational goal of 75% of the MCL are in yellow.
+};
+
+
+\\node[inner sep = 0pt, text width = 8 in,minimum height = 5 in, anchor = north west] at (0in, -2.25in){
+\\begin{tabular}{|c|c|c|c|c|}
+  \\hline
+  MONTH & Minimum TTHM ($\\mu$g/L) & Maximum TTHM ($\\mu$g/L) & Minimum HAA5 ($\\mu$g/L) & Maximum HAA5 ($\\mu$g/L) \\\\
+  \\hline
+  ",rows <- apply(dbp_table2, 1, function(row) {
+  paste0(paste(row, collapse = " & "), " \\\\")
+}) %>% paste(collapse = "\n  \\hline\n  "),"
+  \\hline
+\\end{tabular}
+};
+
+\\node[inner sep = 0 pt, text width = 5 in, minimum height = 0.25 in, anchor = north west] at (0 in, -8.5 in){
+TTHM LRAA MCL = \\colorbox{red}{80 $\\mu$g/L}; Operational Goal = \\colorbox{yellow}{60 $\\mu$g/L}
+};
+\\node[inner sep = 0 pt, text width = 5 in, minimum height = 0.25 in, anchor = north west] at (0 in, -8.75 in){
+HAA5 LRAA MCL = \\colorbox{red}{60 $\\mu$g/L}; Operational Goal = \\colorbox{yellow}{45 $\\mu$g/L}
+};
+
+
+
+\\end{tikzpicture}
+
+\\newpage
+
+\\begin{landscape}
+
+\\begin{tikzpicture}
+
+\\node[draw, inner sep = 0 pt, fill = green!40, text width = 10.5 in, minimum height = 0.25 in, anchor = north west, align = center] at (0 in, 0 in){
+Percent of Grab Samples < 0.50 mg/L TCL2 Residual - Entire PWD Distribution System - by Month};
+
+\\node[anchor = north west] at (0in, -0.5in){
+
+\\fontsize{10}{12}\\selectfont
+\\begin{tabularx}{10.5in}{|c|X|X|X|X|X|X|X|X|X|X|X|X|}
+  \\hline
+  \\rowcolor{gray!30}
+  Year & Jan & Feb & Mar & Apr & May & Jun & Jul & Aug & Sep & Oct & Nov & Dec \\\\
+  \\hline
+  ",rows <- apply(monthly_table2, 1, function(row) {
+  paste0(paste(row, collapse = " & "), " \\\\")
+}) %>% paste(collapse = "\n  \\hline\n  "),"
+  \\hline
+\\end{tabularx}
+};
+
+\\node[draw, fill = cyan!30, inner sep = 0 pt, text width = 2.5 in, minimum height = 0.25 in, anchor = north west, align = center] at (0 in, -6.5 in){Key};
+\\node[draw, fill = red, inner sep = 0 pt, text width = 2.5 in, minimum height = 0.25 in, anchor = north west, align = left] at (0 in, -6.75 in){\\hspace{0.1in}",tex(">5.0 % Fails Partnership Goal") ,"};
+\\node[draw, fill = orange, inner sep = 0 pt, text width = 2.5 in, minimum height = 0.25 in, anchor = north west, align = left] at (0 in, -7 in){\\hspace{0.1in}",tex("4.0 - 4.99 %"),"};
+\\node[draw, fill = yellow, inner sep = 0 pt, text width = 2.5 in, minimum height = 0.25 in, anchor = north west, align = left] at (0 in, -7.25 in){\\hspace{0.1in}",tex("3.0 - 3.99 %"),"};
+\\node[draw,  inner sep = 0 pt, text width = 2.5 in, minimum height = 0.25 in, anchor = north west, align = left] at (0 in, -7.5 in){\\hspace{0.1in}",tex("0.0 - 2.99 %"),"};
+
+
+\\end{tikzpicture}
+
+\\end{landscape}
 
 "
 
 )
 )
-```
-
-
-Partnership for Safe Water Distribution Program -- Disinfectant Residual Update
-
-The Bureau of Laboratory Services is responsible for administering compliance with the water quality monitoring requirements under both the federal Safe Drinking Water Act (SDWA) and state regulations. As monitoring locations that were temporarily not visited after the onset of COVID-19 are now being revisited, over 600 drinking water samples are collected from `r site_count` monitoring locations.
-
-Regarding disinfectant residual, the Partnership for Safe Water has a numerical goal that 95% of monthly routine samples be within the following range:
-
-**Total Chlorine Residual $\geq$ 0.50 mg/L and $\leq$ 4.0 mg/L**
-
-PWD has met this goal for Partnership Years encompassing June 1, 2017 through May 31, 2021 (the Partnership year begins June 1st and runs through May 31st). From November 2017 -- July 2019, less than 1% of routine samples were below the Partnership goal of 0.50 mg/L for every month. The last month that PWD did not meet the 95% Partnership goal was September 2016 (7.27% of monthly samples were below 0.50 mg/L), with the following two Septembers having less than 2% of samples below 0.50 mg/L and meeting Partnership's monthly goal. The highest percentage of monthly Partnership samples not meeting the goal in the previous three calendar years (`r year(start_date) - 3` -- `r year(start_date)`) was `r max(year_max$percent)`% in `r year_max$Month[which(year_max$percent == max(year_max$percent))]` `r year_max$Year[which(year_max$percent == max(year_max$percent))]`.
-
-A total of `r total_count` samples were collected in `r currentmonthlabel` `r year`, `r updown` `r previous_total_count` samples collected in `r previousmonthlabel`. `r phrase` PWD adjusted the sampling schedule and frequency starting in the second half of March 2020 due to the ongoing COVID-19 pandemic. PWD is still collecting more than the required 360 samples for RTCR/DRR compliance. Starting in November 2020, PWD began to resume sampling from some routine fire and police stations for the RTCR/DRR compliance program. The selected fire and police stations are the locations that are sampled monthly as part of the DBP monitoring program as well. PWD also began resuming sample collection samples from additional fire and police stations earlier this year that were not being sampled during the first year of the pandemic. Starting in July 2020, PWD resumed monthly distribution Disinfection By-Product sampling from the normal fire and police station locations. As of October 2021, Chestnut Hill Hospital is no longer be sampled from and the Chestnut Hill Pressure District Pump Station replaced the hospital as the routine sampling location for the Chestnut Hill pressure district.
-
-**`r currentmonthlabel` `r year` had `r numless0.5` samples below 0.50 mg/l throughout the distribution system, and `r numless1` samples below 1 mg/l.**
-
-```{r include = TRUE, echo = FALSE}
-summarytable
-```
-
-`r tthm_blurb` `r tthmexceed` locations had single sample TTHM results above the MCL of 80 ppb. Single sample TTHM results above the MCL are not an MCL exceedance as compliance with the MCL is based on Locational Running Averages.
-
-`r haa5_blurb` `r haa5exceed` locations had single sample HAA5 results above the MCL of 60 ppb. Single sample HAA5 results above the MCL are not an MCL exceedance as compliance with the MCL is based on Locational Running Averages.
-
-Below is a monthly range of DBP distribution values for the last 13 months. Values that exceed the MCL for a single sample are highlighted in red, and samples that exceed the operational goal of 75% of the MCL are in yellow.
-
-```{r include = TRUE, echo=FALSE}
-dbp_kable
-```
-
-TTHM LRAA MCL = `r text_spec("80 µg/L", color = "white", background = "red")`; Operational Goal = `r text_spec("60 µg/L", color = "black", background = "yellow")`
-
-HAA5 LRAA MCL = `r text_spec("60 µg/L", color = "white", background = "red")`; Operational Goal = `r text_spec("45 µg/L", color = "black", background = "yellow")`
-
-```{r include = T, echo = F}
-monthly_kbl
-```
-
-<!-- Key -->
-
-<!-- `r text_spec(">5.0 % * Fails Partnership Goal", color = "black", background = "red")` -->
-
-<!-- `r text_spec("4.0-4.99 %", color = "black", background = "orange")` -->
-
-<!-- `r text_spec("3.0-3.99 %", color = "black", background = "yellow")` -->
-
-<!-- `r text_spec("0-2.99 %", color = "black", background = "white")` -->
-
-```{r}
-render_connect_email("PFSW-Report-Email.Rmd") %>%
-  attach_connect_email(subject = "PFSW Report", attach_output = TRUE)
-
 ```

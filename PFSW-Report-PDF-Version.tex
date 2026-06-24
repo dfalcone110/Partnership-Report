@@ -1,0 +1,234 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+]{article}
+\usepackage{xcolor}
+\usepackage[left=0.1875in, right=0.1875in, top=0.5in, bottom=0.5in,
+paperwidth=8.5in, paperheight=11in]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{tikz}
+\AtBeginDocument{\vspace{-\baselineskip}}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+
+\renewcommand{\arraystretch}{2.5}
+
+Partnership for Safe Water Distribution Program -- Disinfectant Residual
+Update
+
+The Bureau of Laboratory Services is responsible for administering
+compliance with the water quality monitoring requirements under both the
+federal Safe Drinking Water Act (SDWA) and state regulations. As
+monitoring locations that were temporarily not visited after the onset
+of COVID-19 are now being revisited, over 600 drinking water samples are
+collected from 81 monitoring locations.
+
+Regarding disinfectant residual, the Partnership for Safe Water has a
+numerical goal that 95\% of monthly routine samples be within the
+following range:
+
+\textbf{Total Chlorine Residual \(\geq\) 0.50 mg/L and \(\leq\) 4.0
+mg/L}
+
+PWD has met this goal for Partnership Years encompassing June 1, 2017
+through May 31, 2021 (the Partnership year begins June 1st and runs
+through May 31st). From November 2017 -- July 2019, less than 1\% of
+routine samples were below the Partnership goal of 0.50 mg/L for every
+month. The last month that PWD did not meet the 95\% Partnership goal
+was September 2016 (7.27\% of monthly samples were below 0.50 mg/L),
+with the following two Septembers having less than 2\% of samples below
+0.50 mg/L and meeting Partnership's monthly goal. The highest percentage
+of monthly Partnership samples not meeting the goal in the previous
+three calendar years (2023 -- 2026) was 6.8\% in Sep 2025.
+
+A total of 691 samples were collected in May 2026, down from 732 samples
+collected in April. 488 field chlorine residual samples were collected
+in accordance with DRR/RTCR requirements. PWD adjusted the sampling
+schedule and frequency starting in the second half of March 2020 due to
+the ongoing COVID-19 pandemic. PWD is still collecting more than the
+required 360 samples for RTCR/DRR compliance. Starting in November 2020,
+PWD began to resume sampling from some routine fire and police stations
+for the RTCR/DRR compliance program. The selected fire and police
+stations are the locations that are sampled monthly as part of the DBP
+monitoring program as well. PWD also began resuming sample collection
+samples from additional fire and police stations earlier this year that
+were not being sampled during the first year of the pandemic. Starting
+in July 2020, PWD resumed monthly distribution Disinfection By-Product
+sampling from the normal fire and police station locations. As of
+October 2021, Chestnut Hill Hospital is no longer be sampled from and
+the Chestnut Hill Pressure District Pump Station replaced the hospital
+as the routine sampling location for the Chestnut Hill pressure
+district.
+
+\textbf{May 2026 had 0 samples below 0.50 mg/l throughout the
+distribution system, and 2 samples below 1 mg/l.}
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:unnamed-chunk-12}Sample Summary}
+\centering
+\begin{tabular}[t]{cc>{\centering\arraybackslash}p{20em}}
+\toprule
+- & Count & Description\\
+\midrule
+\cellcolor{gray!10}{Total DRR Samples for May 2026} & \cellcolor{gray!10}{488} & \cellcolor{gray!10}{}\\
+Num of samples < 1.00 mg/L & 2 & Below PWD distribution system goal of 1.00 mg/L\\
+\cellcolor{gray!10}{Num of samples >0.5 mg/L, <1.00 mg/L} & \cellcolor{gray!10}{2} & \cellcolor{gray!10}{Meets PfSW goal of 0.50 mg/L. Does not meet PWD distribution system goal 1.00 mg/L}\\
+Num of samples >0.15 mg/L, <0.50 mg/L & 0 & Meets PADEP minimum distribution residual required (0.15 mg/L). Does not meet: PfSW goal (0.50 mg/L), PWD distribution system goal (1.00 mg/L)\\
+\cellcolor{gray!10}{Num of samples <0.15 mg/L} & \cellcolor{gray!10}{0} & \cellcolor{gray!10}{Does not meet: PADEP minimum distribution residual required (0.15 mg/L), PfSW goal (0.50 mg/L), PWD distribution system goal (1.00 mg/L)}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Total THM values increased compared to last month. 0 locations had
+single sample TTHM results above the MCL of 80 ppb. Single sample TTHM
+results above the MCL are not an MCL exceedance as compliance with the
+MCL is based on Locational Running Averages.
+
+HAA5 Minimum decreased and HAA5 Maximum increased compared to last
+month. 0 locations had single sample HAA5 results above the MCL of 60
+ppb. Single sample HAA5 results above the MCL are not an MCL exceedance
+as compliance with the MCL is based on Locational Running Averages.
+
+Below is a monthly range of DBP distribution values for the last 13
+months. Values that exceed the MCL for a single sample are highlighted
+in red, and samples that exceed the operational goal of 75\% of the MCL
+are in yellow.
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:unnamed-chunk-11}Monthly Minimum and Maximum Total Trihalomethanes and 5 Haloacetic Acids}
+\centering
+\begin{tabular}[t]{>{\centering\arraybackslash}p{6 cm}>{\centering\arraybackslash}p{2 cm}>{\centering\arraybackslash}p{2 cm}>{\centering\arraybackslash}p{2 cm}>{\centering\arraybackslash}p{2 cm}}
+\toprule
+Date & Total THM Minimum & Total THM Maximum & 5 HAA Minimum (ug/L) & 5 HAA Maximum (ug/L)\\
+\midrule
+2026-May & \cellcolor{white}{35.7} & \cellcolor{white}{42.3} & \cellcolor{white}{25.5} & \cellcolor{yellow}{50.2}\\
+2026-Apr & \cellcolor{white}{26.6} & \cellcolor{white}{33.7} & \cellcolor{white}{28} & \cellcolor{yellow}{47.7}\\
+2026-Mar & \cellcolor{white}{25.3} & \cellcolor{white}{36.3} & \cellcolor{white}{35.6} & \cellcolor{white}{43.3}\\
+2026-Feb & \cellcolor{white}{18.3} & \cellcolor{white}{25.4} & \cellcolor{white}{16.8} & \cellcolor{white}{35.4}\\
+2026-Jan & \cellcolor{white}{16.5} & \cellcolor{white}{26.1} & \cellcolor{white}{18.1} & \cellcolor{white}{44.9}\\
+2025-Dec & \cellcolor{white}{19.4} & \cellcolor{white}{26.6} & \cellcolor{white}{24.2} & \cellcolor{white}{31}\\
+2025-Nov & \cellcolor{white}{25.1} & \cellcolor{white}{49.7} & \cellcolor{white}{22.7} & \cellcolor{white}{44.2}\\
+2025-Oct & \cellcolor{white}{44.6} & \cellcolor{yellow}{74.3} & \cellcolor{white}{21.9} & \cellcolor{white}{35.9}\\
+2025-Sep & \cellcolor{white}{38} & \cellcolor{yellow}{61.9} & \cellcolor{white}{17.5} & \cellcolor{white}{26.7}\\
+2025-Aug & \cellcolor{white}{58.5} & \cellcolor{red}{82.7} & \cellcolor{white}{32.2} & \cellcolor{yellow}{49.2}\\
+2025-Jul & \cellcolor{yellow}{60.3} & \cellcolor{red}{90.3} & \cellcolor{white}{2.1} & \cellcolor{red}{64.5}\\
+2025-Jun & \cellcolor{white}{35.6} & \cellcolor{white}{51.2} & \cellcolor{white}{24} & \cellcolor{yellow}{48.8}\\
+2025-May & \cellcolor{white}{36.4} & \cellcolor{white}{53.1} & \cellcolor{white}{22.6} & \cellcolor{yellow}{46.4}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+TTHM LRAA MCL = \colorbox{red}{\textcolor{white}{80 µg/L}}; Operational
+Goal = \colorbox{yellow}{\textcolor{black}{60 µg/L}}
+
+HAA5 LRAA MCL = \colorbox{red}{\textcolor{white}{60 µg/L}}; Operational
+Goal = \colorbox{yellow}{\textcolor{black}{45 µg/L}}
+
+\begin{landscape}\begin{table}[H]
+\centering
+\caption{\label{tab:unnamed-chunk-13}Percent of Grab Samples < 0.50 mg/L TCL2 Residual - Entire PWD Distribution System - by Month}
+\centering
+\resizebox{\ifdim\width<\linewidth\linewidth\else\width\fi}{!}{
+\begin{tabular}[t]{>{\centering\arraybackslash}p{1.5 cm}>{\centering\arraybackslash}p{1.5 cm}>{\centering\arraybackslash}p{1.5 cm}>{\centering\arraybackslash}p{1.5 cm}>{\centering\arraybackslash}p{1.5 cm}>{\centering\arraybackslash}p{1.5 cm}>{\centering\arraybackslash}p{1.5 cm}>{\centering\arraybackslash}p{1.5 cm}>{\centering\arraybackslash}p{1.5 cm}>{\centering\arraybackslash}p{1.5 cm}>{\centering\arraybackslash}p{1.5 cm}>{\centering\arraybackslash}p{1.5 cm}>{\centering\arraybackslash}p{1.5 cm}}
+\toprule
+Year & Jan & Feb & Mar & Apr & May & Jun & Jul & Aug & Sep & Oct & Nov & Dec\\
+\midrule
+2026 & \cellcolor{white}{0} & \cellcolor{white}{0} & \cellcolor{white}{0} & \cellcolor{white}{0} & \cellcolor{white}{0} & \cellcolor{white}{NA} & \cellcolor{white}{NA} & \cellcolor{white}{NA} & \cellcolor{white}{NA} & \cellcolor{white}{NA} & \cellcolor{white}{NA} & \cellcolor{white}{NA}\\
+2025 & \cellcolor{white}{0} & \cellcolor{white}{0} & \cellcolor{white}{0} & \cellcolor{white}{0} & \cellcolor{white}{0} & \cellcolor{white}{0} & \cellcolor{white}{1.7} & \cellcolor{white}{2.2} & \cellcolor{red}{6.8} & \cellcolor{yellow}{3.5} & \cellcolor{white}{0} & \cellcolor{white}{0}\\
+2024 & \cellcolor{white}{0} & \cellcolor{white}{0} & \cellcolor{white}{0} & \cellcolor{white}{0} & \cellcolor{white}{0} & \cellcolor{white}{0.5} & \cellcolor{white}{0.5} & \cellcolor{white}{1.3} & \cellcolor{white}{1.3} & \cellcolor{white}{0.4} & \cellcolor{white}{0.2} & \cellcolor{white}{0}\\
+2023 & \cellcolor{white}{0} & \cellcolor{white}{0} & \cellcolor{white}{0} & \cellcolor{white}{0} & \cellcolor{white}{0} & \cellcolor{white}{0} & \cellcolor{white}{0.31} & \cellcolor{white}{0.91} & \cellcolor{white}{2.62} & \cellcolor{white}{0.88} & \cellcolor{white}{0} & \cellcolor{white}{0}\\
+2022 & \cellcolor{white}{0} & \cellcolor{white}{0} & \cellcolor{white}{0} & \cellcolor{white}{0} & \cellcolor{white}{0} & \cellcolor{white}{0} & \cellcolor{white}{0.15} & \cellcolor{white}{1.06} & \cellcolor{white}{0.87} & \cellcolor{white}{0.15} & \cellcolor{white}{0} & \cellcolor{white}{0}\\
+2021 & \cellcolor{white}{0} & \cellcolor{white}{0} & \cellcolor{white}{0} & \cellcolor{white}{0} & \cellcolor{white}{0} & \cellcolor{white}{0} & \cellcolor{white}{1.82} & \cellcolor{white}{0} & \cellcolor{white}{0} & \cellcolor{white}{0.47} & \cellcolor{white}{0} & \cellcolor{white}{0}\\
+2020 & \cellcolor{white}{0} & \cellcolor{white}{0} & \cellcolor{white}{0} & \cellcolor{white}{0} & \cellcolor{white}{0} & \cellcolor{white}{0} & \cellcolor{white}{0.57} & \cellcolor{white}{1.86} & \cellcolor{white}{2.78} & \cellcolor{white}{0.65} & \cellcolor{white}{0} & \cellcolor{white}{0}\\
+2019 & \cellcolor{white}{0} & \cellcolor{white}{0} & \cellcolor{white}{0} & \cellcolor{white}{0} & \cellcolor{white}{0.13} & \cellcolor{white}{0.28} & \cellcolor{white}{0.51} & \cellcolor{white}{1.17} & \cellcolor{white}{2.71} & \cellcolor{white}{0.92} & \cellcolor{white}{0} & \cellcolor{white}{0}\\
+\bottomrule
+\multicolumn{13}{l}{\rule{0pt}{1em}\textit{Key}}\\
+\multicolumn{13}{l}{\rule{0pt}{1em}\colorbox{red}{> 5.0 Percent Fails Partnership Goal}}\\
+\multicolumn{13}{l}{\rule{0pt}{1em}\colorbox{orange}{4.0 to 4.99 Percent}}\\
+\multicolumn{13}{l}{\rule{0pt}{1em}\colorbox{yellow}{3.0 to 3.99 Percent}}\\
+\multicolumn{13}{l}{\rule{0pt}{1em}\colorbox{white}{0 to 2.99 Percent}}\\
+\end{tabular}}
+\end{table}
+\end{landscape}
+
+\end{document}
