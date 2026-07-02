@@ -80,7 +80,7 @@ cat(paste0(
 \\node[inner sep = 0pt, text width = 8in, minimum height = 0.25in, anchor = north west, align = center] at (0in, -0.5in) {\\fontsize{12pt}{10pt}{",currentmonthlabel,", ", year, "}};
 \\node[inner sep = 0pt, text width = 8in, minimum height = 0.25in, anchor = north west, align = center] at (0in, -0.75in) {\\underline{\\hspace{8in}}};
 
-\\node[inner sep = 0pt, text width = 8in, minimum height = 0.5in, anchor = north west, align = left] at (0in, -1.5in) {The Bureau of Laboratory Services is responsible for administering compliance with the water quality monitoring requirements under both the federal Safe Drinking Water Act (SDWA) and state regulations. As monitoring locations that were temporarily not visited after the onset of COVID-19 are now being revisited, over 600 drinking water samples are collected from", site_count ,"monitoring locations.};
+\\node[inner sep = 0pt, text width = 8in, minimum height = 0.5in, anchor = north west, align = left] at (0in, -1.5in) {The Bureau of Laboratory Services is responsible for administering compliance with the water quality monitoring requirements under both the federal Safe Drinking Water Act (SDWA) and state regulations. As monitoring locations that were temporarily not visited after the onset of COVID-19 are now being revisited, over 600 drinking water samples are collected from ", site_count ,"monitoring locations.};
 
 \\node[inner sep = 0pt, text width = 8in, minimum height = 0.25in, anchor = north west, align = left] at (0in, -2.25in) {", tex("Regarding disinfectant residual, the Partnership for Safe Water has a numerical goal that 95% of monthly routine samples be within the following range:"),"};
 
@@ -92,13 +92,13 @@ cat(paste0(
 
 \\node[inner sep = 0pt, text width = 8in, minimum height = 2in, anchor = north west, align = left] at (0in, -4.25in) {
 
-A total of ", total_count, " samples were collected in ", currentmonthlabel," ", year, ", ", updown," ", previous_total_count,  " samples collected in ", previousmonthlabel, ". ",phrase, " PWD adjusted the sampling schedule and frequency starting in the second half of March 2020 due to the ongoing COVID-19 pandemic. PWD is still collecting more than the required 360 samples for RTCR/DRR compliance. Starting in November 2020, PWD began to resume sampling from some routine fire and police stations for the RTCR/DRR compliance program. The selected fire and police stations are the locations that are sampled monthly as part of the DBP monitoring program as well. PWD also began resuming sample collection samples from additional fire and police stations earlier this year that were not being sampled during the first year of the pandemic. Starting in July 2020, PWD resumed monthly distribution Disinfection By-Product sampling from the normal fire and police station locations. As of October 2021, Chestnut Hill Hospital is no longer be sampled from and the Chestnut Hill Pressure District Pump Station replaced the hospital as the routine sampling location for the Chestnut Hill pressure district.
+A total of ", total_count, " samples were collected in ", currentmonthlabel," ", year, ", ", updown," ", previous_total_count,  " samples collected in ", previousmonthlabel,", ", previousyear, ". ",phrase, " PWD adjusted the sampling schedule and frequency starting in the second half of March 2020 due to the ongoing COVID-19 pandemic. PWD is still collecting more than the required 360 samples for RTCR/DRR compliance. Starting in November 2020, PWD began to resume sampling from some routine fire and police stations for the RTCR/DRR compliance program. The selected fire and police stations are the locations that are sampled monthly as part of the DBP monitoring program as well. PWD also began resuming sample collection samples from additional fire and police stations earlier this year that were not being sampled during the first year of the pandemic. Starting in July 2020, PWD resumed monthly distribution Disinfection By-Product sampling from the normal fire and police station locations. As of October 2021, Chestnut Hill Hospital is no longer sampled from and the Chestnut Hill Pressure District Pump Station replaced the hospital as the routine sampling location for the Chestnut Hill pressure district.
 
 };
 
 
 \\node[inner sep = 0pt, text width = 8in, minimum height = 0.25in, anchor = north west, align = left] at (0in, -6.50in) {
-\\textbf{", currentmonthlabel," ", year, " had ", numless0.5, " samples below 0.50 mg/L throughout the distribution system, and ", numless1," samples below 1 mg/l.}};
+\\textbf{", currentmonthlabel," ", year, " had ", numless0.5, " samples below 0.50 mg/L throughout the distribution system, and ", numless1," samples below 1 mg/L.}};
 
 \\node[inner sep = 0pt, text width = 3in, minimum height = 0.25in, anchor = north west, align = center] at (0in, -6.75in) {};
 \\node[draw, inner sep = 0pt, text width = 2in, minimum height = 0.25in, anchor = north west, align = center] at (3in, -6.75in) {Count};
@@ -136,19 +136,19 @@ A total of ", total_count, " samples were collected in ", currentmonthlabel," ",
 
 \\node[inner sep = 0pt, text width = 8in, minimum height = 0.75in, anchor = north west, align = left] at (0in, 0in) {
 
-", tthm_blurb, tthmexceed," locations had single sample TTHM results above the MCL of 80 ppb. Single sample TTHM results above the MCL are not an MCL exceedance as compliance with the MCL is based on Locational Running Averages.
+", tthm_blurb," ", tthmexceed," locations had single sample TTHM results above the MCL of 80 ppb. Single sample TTHM results above the MCL are not an MCL exceedance as compliance with the MCL is based on Locational Running Annual Averages.
 
 };
 
 \\node[inner sep = 0pt, text width = 8in, minimum height = 0.75in, anchor = north west, align = left] at (0in, -0.75in) {
 
-", haa5_blurb, haa5exceed," locations had single sample HAA5 results above the MCL of 60 ppb. Single sample HAA5 results above the MCL are not an MCL exceedance as compliance with the MCL is based on Locational Running Averages.
+", haa5_blurb," ", haa5exceed," locations had single sample HAA5 results above the MCL of 60 ppb. Single sample HAA5 results above the MCL are not an MCL exceedance as compliance with the MCL is based on Locational Running Annual Averages.
 };
 
 
 \\node[inner sep = 0pt, text width = 8in, minimum height = 0.75in, anchor = north west, align = left] at (0in, -1.5in) {
 
-Below is a monthly range of DBP distribution values for the last 13 months. Values that exceed the MCL for a single sample are highlighted in red, and samples that exceed the operational goal of 75% of the MCL are in yellow.
+", tex("Below is a monthly range of DBP distribution values for the last 13 months. Values that exceed the MCL for a single sample are highlighted in red, and samples that exceed the operational goal of 75% of the MCL are in yellow."),"
 };
 
 

@@ -40,6 +40,9 @@ pmonth <- currentmonth - months(1)
 currentmonthlabel <- format(as.Date(currentmonth), '%B')
 previousmonthlabel <- format(as.Date(pmonth), '%B')
 
+previousdate <- start_date - months(1)
+previousyear <- isoyear(previousdate)
+
 #---------------------
 #Variables from sradb
 #---------------------
@@ -124,7 +127,7 @@ numless0.5 <- ifelse("Field-Chlorine Residual Total Only" %in% countcurrent$type
 numless1 <- ifelse("Field-Chlorine Residual Total Only" %in% countcurrent$type, countcurrent$count_lessthan1[4], countcurrent$count_lessthan1[3])
 percentless0.5 <- ifelse("Field-Chlorine Residual Total Only" %in% countcurrent$type, countcurrent$percent[4], countcurrent$percent[3])
 
-phrase <- ifelse("Field-Chlorine Residual Total Only" %in% countcurrent$type,paste(paste(drr_count, "field chlorine residual samples were collected in accordance with DRR requirements."), paste(coliformcount2, "field chlorine residual samples were collected in accordance with RTCR requirements.")), paste(drr_count, "field chlorine residual samples were collected in accordance with DRR/RTCR requirements."))
+phrase <- ifelse("Field-Chlorine Residual Total Only" %in% countcurrent$type,paste0(paste0("In ", currentmonthlabel, ", " ,drr_count, " field chlorine residual samples were collected in accordance with DRR requirements; "), paste0(coliformcount2, " field chlorine residual samples were collected in accordance with RTCR requirements. ")), paste0("In ",currentmonthlabel, ", " ,drr_count, " field chlorine residual samples were collected in accordance with DRR/RTCR requirements."))
 
 #----------------------------
 #Getting total number of sites sampled in the month
@@ -434,11 +437,11 @@ great3yr <- monthly_table1 %>% filter(date_temp > (start_date - years(3)))
 
 failuretext <- ifelse(
   start_date == great5$date_temp[1],
-  paste0("In the month of ",currentmonthlabel, " ", year, " ", great5$p_less_point5[1], "% of samples were less than 0.5 mg/L and therefore PWD failed to meet the 95% goal for Partnership. Prior to ", currentmonthlabel, " ", year, ", PWD had not exceeded the Partnership goal since ", format(as.Date(great5$date_temp[2]), '%B'), " ", great5$year[2], "(", great5$p_less_point5[2], "%). Elevated temperatures may impact disinfectant residual in PWD's distribution system. The highest Partnership percentage in the previous three calendar years(", year-3, " - ", year, ") was ", max(great3yr$p_less_point5), "% in ", format(as.Date(great3yr$date_temp[which.max(great3yr$p_less_point5)]), '%B'), " ", great3yr$year[which.max(great3yr$p_less_point5)], "."
+  paste0("In the month of ",currentmonthlabel, " ", year, ", ", great5$p_less_point5[1], "% of samples were less than 0.5 mg/L and therefore PWD failed to meet the 95% goal for Partnership. Prior to ", currentmonthlabel, " ", year, ", PWD had not exceeded the Partnership goal since ", format(as.Date(great5$date_temp[2]), '%B'), " ", great5$year[2], " (", great5$p_less_point5[2], "%). Elevated temperatures may impact disinfectant residual in PWD's distribution system. The highest Partnership percentage in the previous three calendar years (", year-3, " - ", year, ") was ", max(great3yr$p_less_point5), "% in ", format(as.Date(great3yr$date_temp[which.max(great3yr$p_less_point5)]), '%B'), " ", great3yr$year[which.max(great3yr$p_less_point5)], "."
 ), 
 ifelse(
   start_date != great5$date_temp[1],
-  paste0("PWD has continuosly met the 95% Partnership goal from ", format(as.Date(great5$date_temp[1]), '%B'), " ", great5$year[1], " to ", currentmonthlabel," ", year, "(the partnership year begins June 1st and runs through May 31st).  Prior to ", format(as.Date(great5$date_temp[1]), '%B'), " ", great5$year[1], ", PWD had not exceeded the Partnership goal since ", format(as.Date(great5$date_temp[2]), '%B'), " ", great5$year[2], "(", great5$p_less_point5[2],"%). Elevated temperatures may impact disinfectant residual in PWDs distribution system. The highest Partnership percentage in the previous three calendar years(", year-3, " - ", year, ") was ", max(great3yr$p_less_point5), "% in ", format(as.Date(great3yr$date_temp[which.max(great3yr$p_less_point5)]), '%B'), " ", great3yr$year[which.max(great3yr$p_less_point5)]),"."
+  paste0("PWD has continuosly met the 95% Partnership goal from ", format(as.Date(great5$date_temp[1]), '%B'), " ", great5$year[1], " to ", currentmonthlabel," ", year, " (the partnership year begins June 1st and runs through May 31st).  Prior to ", format(as.Date(great5$date_temp[1]), '%B'), " ", great5$year[1], ", PWD had not exceeded the Partnership goal since ", format(as.Date(great5$date_temp[2]), '%B'), " ", great5$year[2], " (", great5$p_less_point5[2],"%). Elevated temperatures may impact disinfectant residual in PWDs distribution system. The highest Partnership percentage in the previous three calendar years (", year-3, " - ", year, ") was ", max(great3yr$p_less_point5), "% in ", format(as.Date(great3yr$date_temp[which.max(great3yr$p_less_point5)]), '%B'), " ", great3yr$year[which.max(great3yr$p_less_point5)], "."), "CHECK"
 
 ))
 
